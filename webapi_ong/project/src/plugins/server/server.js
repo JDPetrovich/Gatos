@@ -1,10 +1,9 @@
-import express from 'express';
-import cors from "cors";
+import express from 'express'
+import Rota from './routes/rotas.js'
 import Constantes from './constants/constantes.js';
-import Rota from './routes/rotas.js';
 
 class Servidor {
-    static #portaPadrao = 0;
+    static #portaPadrao = 0
     #porta;
     #appExpress;
 
@@ -12,7 +11,6 @@ class Servidor {
         this.#porta = process.env.PORTA_SERVIDOR || Servidor.#portaPadrao;
         this.#appExpress = express()
         this.#appExpress.use(express.json())
-        this.#appExpress.use(cors())
         this.#AdicionarRedirecionamentos()
         this.#AdicionarRotas()
     }
@@ -23,13 +21,24 @@ class Servidor {
             new Rota.REDIRECIONAMENTO().GetRedirecionamentos()
         )
     }
-    
+
     #AdicionarRotas() {
         this.#appExpress.use(
             Constantes.UrlRota.API,
             new Rota.INICIAL().GetRotas()
         );
-    
+        this.#appExpress.use(
+            Constantes.UrlRota.API,
+            new Rota.USUARIO().GetRotas()
+        );
+        this.#appExpress.use(
+            Constantes.UrlRota.API,
+            new Rota.GATO().GetRotas()
+        );
+          this.#appExpress.use(
+            Constantes.UrlRota.API,
+            new Rota.RECEBIMENTO().GetRotas()
+        );
     }
 
     Rodar() {
@@ -37,6 +46,7 @@ class Servidor {
             console.log(`O servidor está rodando na URI http://localhost:${this.#porta}`);
         });
     }
+
 }
 
-export default Servidor;
+export default Servidor
