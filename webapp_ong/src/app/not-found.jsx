@@ -14,7 +14,6 @@ export default function NotFound() {
   return (
     <Layout className={Style.leiaute}>
       <Layout>
-        <Cabecalho titulo="Página não encontrada" />
         <Content style={{ 
           margin: "16px",
           backgroundColor: "white",
@@ -36,7 +35,6 @@ export default function NotFound() {
             </Link>
           </Paragraph>
         </Content>
-        <Rodape />
       </Layout>
     </Layout>
   );

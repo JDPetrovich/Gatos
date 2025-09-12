@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import Rota from './routes/rotas.js'
 import Constantes from './constants/constantes.js';
 
@@ -10,6 +11,10 @@ class Servidor {
     constructor() {
         this.#porta = process.env.PORTA_SERVIDOR || Servidor.#portaPadrao;
         this.#appExpress = express()
+        this.#appExpress.use(cors({
+            origin: 'http://localhost:3000',
+            credentials: true
+        }));
         this.#appExpress.use(express.json())
         this.#AdicionarRedirecionamentos()
         this.#AdicionarRotas()
@@ -35,7 +40,7 @@ class Servidor {
             Constantes.UrlRota.API,
             new Rota.GATO().GetRotas()
         );
-          this.#appExpress.use(
+        this.#appExpress.use(
             Constantes.UrlRota.API,
             new Rota.RECEBIMENTO().GetRotas()
         );
