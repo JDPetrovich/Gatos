@@ -102,6 +102,19 @@ class UsuarioController {
             res.status(codeHttp).json(JSON.parse(falha.Json()));
         }
     }
+
+       async ReenviarCodigo(req, res) {
+        try {
+            const usuario = new Servico.USUARIO(Constantes.UrlRota.REENVIAR_SENHA);
+            const { email } = req.body;
+            await usuario.reenviarCodigo(email);
+            res.status(Constantes.CodigoHTTP.SUCESSO).json(JSON.parse(usuario.Json()));
+        } catch (erro) {
+            const codeHttp = erro?.codeHttp ?? Constantes.CodigoHTTP.ERRO_INTERNO_SERVIDOR;
+            const falha = new FalhaService(Constantes.UrlRota.REENVIAR_SENHA, erro.message);
+            res.status(codeHttp).json(JSON.parse(falha.Json()));
+        }
+    }
 }
 
 export default UsuarioController;

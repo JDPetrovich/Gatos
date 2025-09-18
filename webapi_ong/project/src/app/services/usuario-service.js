@@ -2,14 +2,19 @@ import { Usuario } from '../context/models/modelos.js';
 import { UsuarioRepo } from '../context/repositories/repositorios.js';
 import { ErroRequisicao } from '../../plugins/exceptions/user-exception.js';
 import { enviarEmail } from '../helpers/email-util.js';
-import bcrypt from 'bcrypt';
 import RecuperacaoSenha from '../context/models/recuperacao-senha-model.js';
+import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
 
 export default class UsuarioService {
     #representacao = { content: "" };
 
     Json() {
         return JSON.stringify(this.#representacao)
+    }
+
+    gerarCodigo() {
+        return Math.floor(100000 + Math.random() * 900000).toString();
     }
 
     async cadastrarOuAtualizarUsuario(dados) {
@@ -80,10 +85,17 @@ export default class UsuarioService {
                 throw new ErroRequisicao('Senha inválida.');
             }
 
+            const token = jwt.sign(
+                { id_usuario: usuario.id_usuario, tipo: usuario.tipo },
+                process.env.JWT_SECRET,
+                { expiresIn: '2h' }
+            );
+
             const { senha: _, ...usuarioSemSenha } = usuario;
             this.#representacao.content = {
                 mensagem: "Login realizado com sucesso!",
-                usuario: usuarioSemSenha
+                usuario: usuarioSemSenha,
+                token
             };
         } catch (erro) {
             throw new ErroRequisicao(erro.message || 'Erro ao realizar login.');
@@ -174,7 +186,7 @@ export default class UsuarioService {
             const usuarioDB = await repo.buscarPorEmail(email);
             if (!usuarioDB) throw new ErroRequisicao("Usuário não encontrado para o e-mail informado!");
 
-            const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+            const codigo = this.gerarCodigo()
             const validadeMinutos = 15;
             const expira_em = new Date(Date.now() + validadeMinutos * 60 * 1000);
 
@@ -213,6 +225,38 @@ export default class UsuarioService {
             await repo.invalidarCodigo({ email, codigo });
 
             this.#representacao.content = { mensagem: "Senha redefinida com sucesso!" };
+        } catch (erro) {
+            throw new ErroRequisicao(erro.message);
+        }
+    }
+
+    async reenviarCodigo(email) {
+        let repo;
+        try {
+            if (!email) throw new ErroRequisicao("O campo 'email' é obrigatório!");
+
+            repo = new UsuarioRepo();
+            let cod = await repo.buscarCodigoAtivo(email);
+
+            let codigo;
+            if (cod) {
+                codigo = cod.codigo;
+            } else {
+                codigo = this.gerarCodigo();
+                const validadeMinutos = 15;
+                const expira_em = new Date(Date.now() + validadeMinutos * 60 * 1000);
+
+                const recu = new RecuperacaoSenha();
+                await recu.Popula({ email, codigo, expira_em });
+                await repo.salvarCodigo(recu);
+            }
+
+            await enviarEmail(
+                email,
+                "Recuperação de Senha",
+                `Seu código de recuperação de senha é: ${codigo}\n\nEste código é válido por 15 minutos.\nSe não foi você, ignore este e-mail.`
+            );
+            this.#representacao.content = { mensagem: "Código reenviado para o e-mail informado!" };
         } catch (erro) {
             throw new ErroRequisicao(erro.message);
         }

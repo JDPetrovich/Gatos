@@ -4,16 +4,18 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Input, Button, Card, message } from "antd";
 import styles from "./login.module.css";
+import RecuperarSenhaModal from "./components/RecuperarSenhaModal";
 
 export default function LoginPage() {
   const URL_API = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [modalRecuperarAberto, setModalRecuperarAberto] = useState(false);
 
   const onFinish = async (values) => {
     try {
       setLoading(true);
-      const res = await fetch(`${URL_API}/api/usuario/login-admin`, {
+      const res = await fetch(`${URL_API}/api/usuario/admin/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -21,8 +23,8 @@ export default function LoginPage() {
 
       const data = await res.json();
 
-      if (res.ok && data.token) {
-        localStorage.setItem("token", data.token);
+      if (res.ok && data.content?.token) {
+        localStorage.setItem("token", data.content.token);
         message.success("Login feito com sucesso!");
         router.push("/admin");
       } else {
@@ -36,48 +38,46 @@ export default function LoginPage() {
     }
   };
 
-  const handleForgotPassword = () => {
-    router.push("/recuperar-senha");
-  };
-
   return (
-    <>
-      <div className={styles.container}>
-        <Card title="Login Admin" className={styles.card}>
-          <Form name="login" onFinish={onFinish} layout="vertical">
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Digite seu email" }]}
-            >
-              <Input />
-            </Form.Item>
-
-            <Form.Item
-              label="Senha"
-              name="senha"
-              rules={[{ required: true, message: "Digite sua senha" }]}
-            >
-              <Input.Password />
-            </Form.Item>
-
-            <div className={styles.forgot} onClick={handleForgotPassword}>
+    <div className={styles.container}>
+      <Card title="Login Admin" className={styles.card}>
+        <Form name="login" onFinish={onFinish} layout="vertical">
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Digite seu email" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Senha"
+            name="senha"
+            rules={[{ required: true, message: "Digite sua senha" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <div className={styles.forgot}>
+            <Button type="link" onClick={() => setModalRecuperarAberto(true)}>
               Esqueci minha senha
-            </div>
-
-            <Form.Item>
-              <Button
-                type="primary"
-                htmlType="submit"
-                block
-                loading={loading}
-              >
-                Entrar
-              </Button>
-            </Form.Item>
-          </Form>
-        </Card>
-      </div>
-    </>
+            </Button>
+          </div>
+          <Form.Item>
+            <Button
+              type="primary"
+              htmlType="submit"
+              block
+              loading={loading}
+            >
+              Entrar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Card>
+      <RecuperarSenhaModal
+        aberta={modalRecuperarAberto}
+        aoFechar={() => setModalRecuperarAberto(false)}
+        urlAPI={URL_API}
+      />
+    </div>
   );
 }

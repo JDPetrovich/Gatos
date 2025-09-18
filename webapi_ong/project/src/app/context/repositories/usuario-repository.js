@@ -62,4 +62,19 @@ export default class UsuarioRepository extends BaseRepository {
             data: { usado: true }
         });
     }
+
+    async invalidarCodigosExpirados(tx = this.db) {
+        const agora = new Date();
+        await tx.recuperacaosenha.updateMany({
+            where: { usado: false, expira_em: { lt: agora } },
+            data: { usado: true }
+        });
+    }
+
+    async buscarCodigoAtivo(email, tx = this.db) {
+        return await tx.recuperacaosenha.findFirst({
+            where: { email, usado: false, expira_em: { gte: new Date() } },
+            orderBy: { criado_em: 'desc' }
+        });
+    }
 }

@@ -1,11 +1,10 @@
 import nodemailer from "nodemailer";
 
-var transport = nodemailer.createTransport({
-    host: "sandbox.smtp.mailtrap.io",
-    port: 2525,
+const transport = nodemailer.createTransport({
+    service: "gmail",
     auth: {
-        user: "e9048125699755",
-        pass: "cf33ccf7aa64b2"
+        user: "patasunidas0107@gmail.com",
+        pass: "mghbgycmfzuucvyf"
     }
 });
 
@@ -16,10 +15,15 @@ var transport = nodemailer.createTransport({
  * @param {string} texto - Corpo do e-mail (texto simples)
  */
 export async function enviarEmail(para, assunto, texto) {
-    await transport.sendMail({
-        from: '"Equipe Gatos" <no-reply@gatos.com>',
-        to: para,
-        subject: assunto,
-        text: texto
-    });
+    try {
+        const info = await transport.sendMail({
+            from: '"Equipe Patinhas Unidas" <patasunidas0107@gmail.com',
+            to: para,
+            subject: assunto,
+            text: texto
+        });
+    } catch (error) {
+        console.error("Erro ao enviar e-mail:", error);
+        throw error;
+    }
 }

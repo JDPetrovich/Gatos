@@ -1,11 +1,94 @@
 .conteudo {
     margin: 16px;
     background-color: white;
-    border: 1px solid lightgray;    
+    border: 1px solid lightgray;
     display: flex;
     justify-content: center;
     align-content: center;
     text-align: center;
     flex-wrap: wrap;
     flex-direction: column;
+}
+
+
+.gridPreview {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.gridItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #ccc; 
+  padding: 12px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.fontPreview {
+  font-size: 20px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.fontName {
+  font-size: 14px;
+  color: #666;
+  margin-top: 6px;
+  text-transform: capitalize;
+}
+
+.gloria {
+    font-family: 'Gloria Hallelujah', cursive;
+}
+
+.rocksalt {
+    font-family: 'Rock Salt', cursive;
+}
+
+.indieflower {
+    font-family: 'Indie Flower', cursive;
+}
+
+.shadows {
+    font-family: 'Shadows Into Light', cursive;
+}
+
+.amatic {
+    font-family: 'Amatic SC', cursive;
+}
+
+.patrick {
+    font-family: 'Patrick Hand', cursive;
+}
+
+.caveat {
+    font-family: 'Caveat', cursive;
+}
+
+.covered {
+    font-family: 'Covered By Your Grace', cursive;
+}
+
+.reenie {
+    font-family: 'Reenie Beanie', cursive;
+}
+
+.handlee {
+    font-family: 'Handlee', cursive;
+}
+
+.architects {
+    font-family: 'Architects Daughter', cursive;
+}
+
+.sueellen {
+    font-family: 'Sue Ellen Francisco', cursive;
+}
+
+.chewy {
+    font-family: 'Chewy', cursive;
 }

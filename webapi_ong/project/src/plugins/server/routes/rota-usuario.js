@@ -41,6 +41,11 @@ class RotaUsuario {
             new UsuarioController().RedefinirSenha
         );
 
+         this.#router.post(
+            Constantes.UrlRota.REENVIAR_CODIGO,
+            new UsuarioController().ReenviarCodigo
+        );
+
         this.#router.put(
             Constantes.UrlRota.ADMIN,
             new UsuarioController().AtualizaAdmin

@@ -4,15 +4,13 @@ import Style from "./App.module.css";
 import React from "react";
 import Link from "next/link";
 import { Layout, Typography, Empty, Button } from "antd";
-import Cabecalho from "./components/cabecalho/cabecalho";
-import Rodape from "./components/rodape/rodape";
 
 const { Content } = Layout;
 const { Paragraph } = Typography;
 
 export default function NotFound() {
   return (
-    <Layout className={Style.leiaute}>
+    <Layout className={Style.layout}>
       <Layout>
         <Content style={{ 
           margin: "16px",

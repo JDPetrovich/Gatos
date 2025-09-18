@@ -8,7 +8,7 @@ import Home from "./home/home";
 
 export default function Page() {
   return (
-    <Layout className={Style.leiaute}>
+    <Layout className={Style.layout}>
       <Layout>
         <Cabecalho/>
         <Home />
