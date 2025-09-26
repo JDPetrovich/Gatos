@@ -8,13 +8,13 @@ import { message } from "antd";
 export default function GoogleLogin() {
     const router = useRouter();
     const URL_API = process.env.NEXT_PUBLIC_API_URL;
+    const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
     useEffect(() => {
         const interval = setInterval(() => {
             if (window.google?.accounts?.id) {
                 window.google.accounts.id.initialize({
-                    client_id:
-                        "630200957679-j9i5s0qt9npspkprujui2oo16akgtuop.apps.googleusercontent.com",
+                    client_id: GOOGLE_CLIENT_ID,
                     callback: handleCredentialResponse,
                 });
 

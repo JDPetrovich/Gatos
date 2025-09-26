@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Patinhas Unidas",
   description: "Sistema de adoção e resgate de gatinhos",
+    icons: {
+    icon: "/gato.svg", 
+  },
 };
 
 export default function RootLayout({ children }) {
