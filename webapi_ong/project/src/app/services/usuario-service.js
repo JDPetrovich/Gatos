@@ -5,6 +5,9 @@ import { enviarEmail } from '../helpers/email-util.js';
 import RecuperacaoSenha from '../context/models/recuperacao-senha-model.js';
 import bcrypt from 'bcrypt';
 import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
+
+const CLIENT_ID = "630200957679-j9i5s0qt9npspkprujui2oo16akgtuop.apps.googleusercontent.com";
 
 export default class UsuarioService {
     #representacao = { content: "" };
@@ -99,6 +102,42 @@ export default class UsuarioService {
             };
         } catch (erro) {
             throw new ErroRequisicao(erro.message || 'Erro ao realizar login.');
+        }
+    }
+
+    async loginGoogle(token) {
+        try {
+            if (!token) throw new ErroRequisicao("Token JWT do Google é obrigatório!");
+
+            const client = new OAuth2Client(CLIENT_ID);
+            const ticket = await client.verifyIdToken({
+                idToken: token,
+                audience: CLIENT_ID,
+            });
+            const payload = ticket.getPayload();
+            const email = payload.email;
+
+            const repo = new UsuarioRepo();
+            const usuario = await repo.buscarPorEmail(email);
+
+            if (!usuario) throw new ErroRequisicao("Usuário não autorizado");
+
+            const jwtToken = jwt.sign(
+                { id_usuario: usuario.id_usuario, tipo: usuario.tipo },
+                process.env.JWT_SECRET,
+                { expiresIn: '2h' }
+            );
+
+            const { senha, ...usuarioSemSenha } = usuario;
+            this.#representacao.content = {
+                mensagem: "Login realizado com sucesso!",
+                usuario: usuarioSemSenha,
+                token: jwtToken
+            };
+
+            return this.#representacao;
+        } catch (erro) {
+            throw new ErroRequisicao(erro.message || "Erro ao validar token Google");
         }
     }
 

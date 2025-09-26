@@ -11,7 +11,8 @@ import {
   SafetyCertificateOutlined,
   FileTextOutlined,
   TeamOutlined,
-  SettingOutlined
+  SettingOutlined,
+  LogoutOutlined
 } from "@ant-design/icons";
 
 const { Sider } = Layout;
@@ -29,10 +30,20 @@ function SidebarAdmin() {
     { label: "Solicitações", key: "solicitacoes", icon: <ProfileOutlined /> },
     { label: "Formulários de Adoção", key: "formularios", icon: <FileTextOutlined /> },
     { label: "Feedbacks", key: "feedbacks", icon: <ProfileOutlined /> },
-    { label: "Configurações", key: "config", icon: <SettingOutlined /> }
+    { label: "Configurações", key: "config", icon: <SettingOutlined /> },
+    { 
+      label: "Sair", 
+      key: "logout", 
+      icon: <LogoutOutlined />, 
+      onClick: () => {
+        sessionStorage.removeItem("token");
+        router.replace("/admin/login");
+      }
+    }
   ];
 
   const handleClick = (key) => {
+    if (key === "logout") return;
     router.push(`/admin/${key}`);
   };
 
@@ -53,7 +64,9 @@ function SidebarAdmin() {
         selectedKeys={[menuItems.find(item => pathname.includes(item.key))?.key]}
         items={menuItems.map(item => ({
           ...item,
-          onClick: () => handleClick(item.key)
+          onClick: () => {
+            item.onClick ? item.onClick() : handleClick(item.key);
+          }
         }))}
       />
     </Sider>

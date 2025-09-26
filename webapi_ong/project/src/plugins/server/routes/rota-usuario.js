@@ -41,9 +41,14 @@ class RotaUsuario {
             new UsuarioController().RedefinirSenha
         );
 
-         this.#router.post(
+        this.#router.post(
             Constantes.UrlRota.REENVIAR_CODIGO,
             new UsuarioController().ReenviarCodigo
+        );
+
+        this.#router.post(
+            Constantes.UrlRota.LOGIN_GOOGLE, 
+            new UsuarioController().LoginGoogle
         );
 
         this.#router.put(

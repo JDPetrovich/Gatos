@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, Button, Typography } from "antd";
 import { KeyOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
+import styles from "../../login.module.css";
 
 function RedefinirSenhaForm({ carregando, aoRedefinirSenha, aoReenviarCodigo }) {
   const [codigo, setCodigo] = useState("");
@@ -62,7 +63,7 @@ function RedefinirSenhaForm({ carregando, aoRedefinirSenha, aoReenviarCodigo }) 
         loading={carregando}
         block
         icon={<LockOutlined />}
-        style={{ marginBottom: 8 }}
+        style={{ marginBottom: 8, backgroundColor: '#ff7434' }}
       >
         Redefinir senha
       </Button>
@@ -73,9 +74,11 @@ function RedefinirSenhaForm({ carregando, aoRedefinirSenha, aoReenviarCodigo }) 
         block
         icon={<MailOutlined />}
         disabled={carregando || timer > 0}
+        className={styles.btnReenviar}
       >
         {timer > 0 ? `Reenviar em ${formatarTempo(timer)}` : "Reenviar código"}
       </Button>
+
     </div>
   );
 }

@@ -1,10 +1,12 @@
 "use client";
 
+import '@ant-design/v5-patch-for-react-19';
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Input, Button, Card, message } from "antd";
 import styles from "./login.module.css";
-import RecuperarSenhaModal from "./components/RecuperarSenhaModal";
+import RecuperarSenhaModal from "./components/recuperarSenha/RecuperarSenhaModal";
+import GoogleLogin from './components/loginGoogle/GoogleLogin';
 
 export default function LoginPage() {
   const URL_API = process.env.NEXT_PUBLIC_API_URL;
@@ -63,7 +65,7 @@ export default function LoginPage() {
             <Input.Password />
           </Form.Item>
           <div className={styles.forgot}>
-            <Button type="link" onClick={() => setModalRecuperarAberto(true)}>
+            <Button type="link" onClick={() => setModalRecuperarAberto(true)} style={{ color: '#ff7434' }}>
               Esqueci minha senha
             </Button>
           </div>
@@ -73,10 +75,12 @@ export default function LoginPage() {
               htmlType="submit"
               block
               loading={loading}
+              className={styles.btnEntrar}
             >
               Entrar
             </Button>
           </Form.Item>
+          <GoogleLogin />
         </Form>
       </Card>
       <RecuperarSenhaModal

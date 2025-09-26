@@ -25,8 +25,15 @@
     color: #ff7434;
 }
 
+.logoutContainer {
+    position: absolute;
+    bottom: 16px;
+    width: 90%;
+    left: 5%;
+}
+
 :global(.ant-menu) {
-    background-color: #fff8f0 ;
+    background-color: #fff8f0;
     border-right: none;
 }
 

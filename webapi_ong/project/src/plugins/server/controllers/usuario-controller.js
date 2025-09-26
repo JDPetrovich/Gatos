@@ -40,6 +40,17 @@ class UsuarioController {
         }
     }
 
+    async LoginGoogle(req, res) {
+        try {
+            const usuario = new Servico.USUARIO(Constantes.UrlRota.LOGIN_GOOGLE);
+            await usuario.loginGoogle(req.body.token);
+            res.status(200).json(JSON.parse(usuario.Json()));
+        } catch (erro) {
+            const falha = new FalhaService(Constantes.UrlRota.LOGIN_GOOGLE, erro.message);
+            res.status(erro?.codeHttp ?? 400).json(JSON.parse(falha.Json()));
+        }
+    }
+
     async ConsultaUsuarios(req, res) {
         try {
             const usuario = new Servico.USUARIO(Constantes.UrlRota.USUARIO);
@@ -103,7 +114,7 @@ class UsuarioController {
         }
     }
 
-       async ReenviarCodigo(req, res) {
+    async ReenviarCodigo(req, res) {
         try {
             const usuario = new Servico.USUARIO(Constantes.UrlRota.REENVIAR_SENHA);
             const { email } = req.body;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, message } from "antd";
-import SolicitarCodigoForm from "./SolicitarCodigoForm";
-import RedefinirSenhaForm from "./RedefinirSenhaForm";
+import SolicitarCodigoForm from "../solicitarCodigo/SolicitarCodigoForm";
+import RedefinirSenhaForm from "../redefinirSenha/RedefinirSenhaForm";
 
 function RecuperarSenhaModal({ aberta, aoFechar, urlAPI }) {
   const [etapa, setEtapa] = useState(1);

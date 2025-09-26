@@ -29,7 +29,7 @@ function SolicitarCodigoForm({ carregando, aoSolicitarCodigo }) {
         onClick={solicitar}
         loading={carregando}
         block
-        style={{ marginTop: 12 }}
+        style={{ marginTop: 12, backgroundColor: '#ff7434' }}
         icon={<KeyOutlined />}
       >
         Enviar código
