@@ -1,0 +1,89 @@
+.layout {
+  min-height: 100vh;
+}
+
+.contentLayout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+}
+
+.content {
+  padding: 80px 24px 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex: 1;
+}
+
+.loadingContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+}
+
+.cardIcon {
+  font-size: 24px;
+}
+
+.cardIconBlue {
+  color: blue;
+}
+
+.cardIconRed {
+  color: red;
+}
+
+.cardIconOrange {
+  color: orange;
+}
+
+.cardIconGreen {
+  color: green;
+}
+
+.cardTitle {
+  margin-top: 8px;
+}
+
+.cardBadge {
+  margin-top: 8px;
+}
+
+.cardBadgeBlue {
+  background-color: blue;
+}
+
+.cardBadgeRed {
+  background-color: red;
+}
+
+.cardBadgeOrange {
+  background-color: orange;
+}
+
+.cardBadgeGreen {
+  background-color: green;
+}
+
+.cardDescription {
+  margin-top: 8px;
+}
+
+.collapseContainer {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.listItem {
+  cursor: pointer;
+}

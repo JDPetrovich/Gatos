@@ -24,9 +24,15 @@ export default function LoginPage() {
       const data = await res.json();
 
       if (res.ok && data.content?.token) {
-        localStorage.setItem("token", data.content.token);
-        message.success("Login feito com sucesso!");
-        router.push("/admin");
+        sessionStorage.setItem("token", data.content.token);
+
+        const tokenSalvo = sessionStorage.getItem("token");
+        if (tokenSalvo) {
+          message.success("Login feito com sucesso!");
+          router.push("/admin");
+        } else {
+          message.error("Erro ao salvar token, tente novamente.");
+        }
       } else {
         message.error(data.message || "Usuário ou senha inválidos");
       }

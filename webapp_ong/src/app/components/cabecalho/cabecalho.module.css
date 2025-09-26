@@ -6,9 +6,9 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    height: 100px; 
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    font-family: "Poppins", sans-serif;
+    height: 100px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    font-family: 'Gloria Hallelujah', cursive, "Poppins", sans-serif;
 }
 
 .logoSection {
@@ -17,37 +17,38 @@
 }
 
 .logoIcon {
-    font-size: 36px; 
-    color: #ff6b81;
+    font-size: 36px;
+    color: #ff7434;
     margin-right: 12px;
 }
 
 .title {
-    margin: 0;
-    color: #ff4d6d;
-    font-size: 28px; 
+    margin: 10;
+    color: #ff854d !important;
+    font-size: 28px;
+    font-family: 'Gloria Hallelujah', cursive;
 }
 
 .desktopMenu {
     display: flex;
-    gap: 40px; 
+    gap: 40px;
     align-items: center;
 }
 
 .menuItem {
     cursor: pointer;
-    color: #ff4d6d;
+    color: #ff854d;
     font-weight: 600;
     font-size: 18px;
     display: flex;
     align-items: center;
-    gap: 6px; /* espaço entre ícone e texto */
+    gap: 6px;
     transition: color 0.2s, transform 0.2s;
 }
 
 .menuItem:hover {
-    color: #ff6b81;
-    transform: scale(1.1); 
+    color: #ff854d;
+    transform: scale(1.1);
 }
 
 .mobileMenu {
@@ -55,11 +56,11 @@
     font-size: 28px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .desktopMenu {
         display: none;
     }
+
     .mobileMenu {
         display: inline-flex;
     }
